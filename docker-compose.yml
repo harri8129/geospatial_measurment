@@ -1,0 +1,26 @@
+services:
+
+  postgres:
+    image: postgres:17
+    container_name: geospatial-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: geospatial_db
+      POSTGRES_USER: geospatial_user
+      POSTGRES_PASSWORD: geospatial_password
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - geospatial_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geospatial_user -d geospatial_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  geospatial_postgres_data:a
