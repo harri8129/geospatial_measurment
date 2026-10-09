@@ -10,6 +10,16 @@ class Settings(BaseSettings):
 
     DATABASE_URL : str 
 
+    UPLOAD_DIR: str = "data/uploads"
+    EXTRACTED_DIR: str = "data/extracted"
+
+    MAX_FILE_SIZE_MB: int = 50
+
+    ALLOWED_FILE_EXTENSIONS: tuple[str, ...] = (
+        ".kml",
+        ".zip",
+    )
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

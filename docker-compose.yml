@@ -6,9 +6,9 @@ services:
     restart: unless-stopped
 
     environment:
-      POSTGRES_DB: geospatial_db
-      POSTGRES_USER: geospatial_user
-      POSTGRES_PASSWORD: geospatial_password
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB in .env}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
 
     ports:
       - "5434:5432"
@@ -17,10 +17,10 @@ services:
       - geospatial_postgres_data:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U geospatial_user -d geospatial_db"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
       timeout: 5s
       retries: 5
 
 volumes:
-  geospatial_postgres_data:a
+  geospatial_postgres_data:
